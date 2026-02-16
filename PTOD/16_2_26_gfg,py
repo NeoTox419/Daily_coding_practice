@@ -1,0 +1,38 @@
+"""
+Intuition:
+If a person can attend only one meeting at a time, then no two meetings
+should overlap. The simplest way to detect overlap is to first sort the
+meetings by their starting time. Once sorted, we only need to check
+consecutive meetings. If the start time of the current meeting is
+less than the end time of the previous meeting, then there is an
+overlap and it is not possible to attend all meetings.
+
+Approach:
+1. If the number of meetings is 0 or 1, return True since there can
+    be no overlap.
+2. Sort the meetings based on their starting time.
+3. Iterate through the sorted meetings starting from the second one.
+4. For each meeting, compare its start time with the end time of
+    the previous meeting.
+    - If current_start < previous_end → overlap exists → return False.
+    - Otherwise, continue checking.
+5. If no overlaps are found after the loop, return True.
+"""
+
+class Solution:
+    def canAttend(self, arr):
+        
+        # Step 1: Edge case
+        if len(arr) <= 1:
+            return True
+
+        # Step 2: Sort meetings by starting time
+        arr.sort(key=lambda x: x[0])
+
+        # Step 3 & 4: Check for overlapping meetings
+        for i in range(1, len(arr)):
+            if arr[i][0] < arr[i - 1][1]:
+                return False
+
+        # Step 5: No overlaps found
+        return True
